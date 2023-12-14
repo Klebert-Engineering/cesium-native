@@ -55,17 +55,23 @@ endif()
 
 # tinyxml2's CMake build tries to generate a pkg-config file in a way that's incompatible with multi-config generators
 # (e.g., Visual Studio). And anyway it's trivial to build manually, so we do that here.
-add_library(tinyxml2 tinyxml2/tinyxml2.cpp)
-target_include_directories(
-    tinyxml2
-    PUBLIC
-        tinyxml2
-)
+if (NOT TARGET tinyxml2)
+  add_library(tinyxml2 tinyxml2/tinyxml2.cpp)
+  target_include_directories(
+      tinyxml2
+      PUBLIC
+          tinyxml2
+  )
+endif()
 
-add_subdirectory(asyncplusplus)
+if (NOT TARGET Async++)
+  add_subdirectory(asyncplusplus)
+endif()
 
-set(SPDLOG_BUILD_TESTING OFF CACHE INTERNAL "Disable SPDLOG Testing")
-add_subdirectory(spdlog)
+if (NOT TARGET spdlog)
+  set(SPDLOG_BUILD_TESTING OFF CACHE INTERNAL "Disable SPDLOG Testing")
+  add_subdirectory(spdlog)
+endif()
 
 if (NOT TARGET sqlite3)
   add_subdirectory(sqlite3)
@@ -161,10 +167,12 @@ set(CESIUM_NATIVE_LIBMORTON_INCUDE_DIR "${CMAKE_CURRENT_LIST_DIR}/libmorton/incl
 set(BUILD_TESTING OFF CACHE INTERNAL "Disable libmorton Testing")
 add_subdirectory(libmorton)
 
-# The zlib cmake build makes its working directory dirty.
-# So we make a copy of it to avoid that annoyance.
-file(COPY "${CMAKE_CURRENT_LIST_DIR}/zlib/" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/zlib-src")
-add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/zlib-src ${CMAKE_CURRENT_BINARY_DIR}/zlib)
+if (NOT TARGET zlib)
+  # The zlib cmake build makes its working directory dirty.
+  # So we make a copy of it to avoid that annoyance.
+  file(COPY "${CMAKE_CURRENT_LIST_DIR}/zlib/" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/zlib-src")
+  add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/zlib-src ${CMAKE_CURRENT_BINARY_DIR}/zlib)
+endif()
 
 if(DEFINED CMAKE_TOOLCHAIN_FILE)
     if(NOT IS_ABSOLUTE ${CMAKE_TOOLCHAIN_FILE})
