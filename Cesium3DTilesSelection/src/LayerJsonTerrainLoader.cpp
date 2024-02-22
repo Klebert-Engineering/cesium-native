@@ -490,7 +490,7 @@ Future<LoadLayersResult> loadLayerJson(
     LoadLayersResult result;
     result.errors.emplaceError(fmt::format(
         "Error when parsing layer.json, error code {} at byte offset {}",
-        layerJson.GetParseError(),
+        (int)layerJson.GetParseError(),
         layerJson.GetErrorOffset()));
     return asyncSystem.createResolvedFuture(std::move(result));
   }
