@@ -371,7 +371,7 @@ BingMapsRasterOverlay::createTileProvider(
           fmt::format(
               "Error while parsing Bing Maps imagery metadata, error code "
               "{} at byte offset {}",
-              response.GetParseError(),
+              (int)response.GetParseError(),
               response.GetErrorOffset())});
     }
 

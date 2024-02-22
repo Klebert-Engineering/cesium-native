@@ -1178,7 +1178,7 @@ static QuantizedMeshMetadataResult processMetadata(
   if (metadata.HasParseError()) {
     result.errors.emplaceError(fmt::format(
         "Error when parsing metadata, error code {} at byte offset {}",
-        metadata.GetParseError(),
+        (int)metadata.GetParseError(),
         metadata.GetErrorOffset()));
     return result;
   }
