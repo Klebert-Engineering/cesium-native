@@ -213,7 +213,7 @@ void convertB3dmMetadataToGltfStructuralMetadata(
             "Error when parsing batch table JSON, error code {} at byte "
             "offset "
             "{}. Skip parsing metadata",
-            batchTableJson.GetParseError(),
+            (int)batchTableJson.GetParseError(),
             batchTableJson.GetErrorOffset()));
         return;
       }
