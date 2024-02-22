@@ -386,7 +386,7 @@ Future<LoadLayersResult> loadLayersRecursive(
                 loadLayersResult.errors.emplaceWarning(fmt::format(
                     "Error when parsing layer.json, error code {} at byte "
                     "offset {}",
-                    layerJson.GetParseError(),
+                    (int)layerJson.GetParseError(),
                     layerJson.GetErrorOffset()));
                 return asyncSystem.createResolvedFuture(
                     std::move(loadLayersResult));
